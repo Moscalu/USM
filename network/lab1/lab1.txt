@@ -1,0 +1,36 @@
+-----------------------------Creating subinterfaces-----------------------------
+
+interface FastEthernet8/0.16
+encapsulation dot1Q 16
+ip address 192.168.16.1 255.255.255.0
+exit
+
+interface FastEthernet8/0.17
+encapsulation dot1Q 17
+ip address 192.168.17.1 255.255.255.0
+exit
+
+interface FastEthernet8/0.18
+encapsulation dot1Q 18
+ip address 192.168.18.1 255.255.255.0
+exit
+
+-----------------------------Enabling routing on subinterfaces-----------------------------
+
+interface FastEthernet8/0.16
+ip address 192.168.16.1 255.255.255.0
+exit
+
+interface FastEthernet8/0.17
+ip address 192.168.17.1 255.255.255.0
+exit
+
+interface FastEthernet8/0.18
+ip address 192.168.18.1 255.255.255.0
+exit
+
+-----------------------------Enabling stating routes on the router itself-----------------------------
+
+ip route 192.168.16.0 255.255.255.0 FastEthernet9/0
+ip route 192.168.17.0 255.255.255.0 FastEthernet9/0
+ip route 192.168.18.0 255.255.255.0 FastEthernet9/0

@@ -1,0 +1,7 @@
+clasa1 <-> clasa2
+
+asociere
+
+creaza o clasa asociata la 1, fie clasa definita are o clasa asociata sau fie ea o clasa asociata
+
+
