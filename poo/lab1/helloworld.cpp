@@ -1,15 +1,12 @@
-// 1.Lab
-// Elaborati clasa: Vehicul - serie nr
-// care sa contina un identificator(exemplu mai sus) important e sa
-// fie unic.
-// Sa contina cel putin 3 caracteristici(an, brand, model)
-// Sa contina cel putin un constructor(implicit, cu parametri, de copiere)
-// Sa contina metode de setare (set, get)
-// metoda de validare a identificatorului
+/* 1. Lab
+    Elaborati clasa Vehicul - serie nr care sa contina un identificator(exemplu mai sus), important e sa fie unic.
+    --> Sa contina cel putin 3 caracteristici(an, brand, model)
+    --> Sa contina cel putin un constructor(implicit, cu parametri, de copiere)
+    --> Sa contina metode de setare (set, get) metoda de validare a identificatorului
 
-// Exemplificati utilizarea clasei prin creearea mai multor obiecte, validarea identificatorilor si apelul metodelor.
-
-// algoritmul de validare a IDNV(incepe cu 3 si ultima cifra de control)
+    --> Exemplificati utilizarea clasei prin creearea mai multor obiecte, validarea identificatorilor si apelul metodelor.
+        algoritmul de validare a IDNV(incepe cu 3 si ultima cifra de control)
+*/
 
 #include <iostream>
 #include <string>
@@ -23,43 +20,21 @@ private:
     string model;
 
 public:
-    // Constructors
-    Vehicle() : identifier(""), year(0), brand(""), model("") {}
+    // Constructor
     Vehicle(string id, int y, string b, string m) : identifier(id), year(y), brand(b), model(m) {}
-    Vehicle(const Vehicle& other) : identifier(other.identifier), year(other.year), brand(other.brand), model(other.model) {}
 
     // Getters and setters
-    void setIdentifier(string id) {
-        identifier = id;
-    }
+    void setIdentifier(string id) { identifier = id; }
+    string getIdentifier() const { return identifier; }
 
-    string getIdentifier() const {
-        return identifier;
-    }
+    void setYear(int y) { year = y; }
+    int getYear() const { return year; }
 
-    void setYear(int y) {
-        year = y;
-    }
+    void setBrand(string b) { brand = b; }
+    string getBrand() const { return brand; }
 
-    int getYear() const {
-        return year;
-    }
-
-    void setBrand(string b) {
-        brand = b;
-    }
-
-    string getBrand() const {
-        return brand;
-    }
-
-    void setModel(string m) {
-        model = m;
-    }
-
-    string getModel() const {
-        return model;
-    }
+    void setModel(string m) { model = m; }
+    string getModel() const { return model; }
 
     // Method to validate identifier
     bool validateIdentifier() const {
@@ -86,6 +61,11 @@ public:
 };
 
 int main() {
+    string carInput;
+
+    cout << "Please input the data about a new car: " << endl;
+    cin >> carInput;
+
     // Example usage
     Vehicle car1("3012345678908", 2022, "Toyota", "Camry");
     Vehicle car2("3123456789354", 2023, "Honda", "Accord");
