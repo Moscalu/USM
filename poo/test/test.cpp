@@ -63,26 +63,40 @@ public:
     }
 };
 
+class UserInput {
+public:
+
+    static Vehicle createVehicle() {
+        string id, b, m;
+        int y, c;
+
+        cout << "How much cars do you want to add?"; 
+        cout << "Enter please the ID of the car: "; 
+        cin >> id;
+        cout << "Enter please the Year of the car: ";
+        cin >> y;
+        cout << "Enter please the Brand of the car: ";
+        cin >> b;
+        cout << "Enter please the Model of the car: ";
+        cin >> m;
+    
+         return Vehicle(id, y, b, m);
+    }
+};
+
 int main() {
     // Testing with data insertion.
-    string id;
-    int y;
-    string b;
-    string m;
 
-    cout << "Enter please the ID of the car: " << endl;
-    cin >> id;
-    cout << "Enter please the Year of the car: " << endl;
-    cin >> y;
-    cout << "Enter please the Brand of the car: " << endl;
-    cin >> b;
-    cout << "Enter please the Model of the car: " << endl;
-    cin >> m;
+    Vehicle newVehicle = UserInput::createVehicle();
+    newVehicle.getData();
+
+    Vehicle car1("3012345678908", 2022, "Toyota", "Camry");
+    car1.getData();
 
     // Example usage
-    Vehicle car1("3012345678908", 2022, "Toyota", "Camry");
-    Vehicle car2("3123456789354", 2023, "Honda", "Accord");
-    car2.getData();
+    // Vehicle car1("3012345678908", 2022, "Toyota", "Camry");
+    // Vehicle car2("3123456789354", 2023, "Honda", "Accord");
+    // car2.getData();
 
     // Validate identifiers
     if (car1.validateIdentifier()) {
@@ -91,11 +105,11 @@ int main() {
         cout << "Car 1 identifier is invalid." << endl;
     }
 
-    if (car2.validateIdentifier()) {
-        cout << "Car 2 identifier is valid." << endl;
-    } else {
-        cout << "Car 2 identifier is invalid." << endl;
-    }
+    // if (car2.validateIdentifier()) {
+    //     cout << "Car 2 identifier is valid." << endl;
+    // } else {
+    //     cout << "Car 2 identifier is invalid." << endl;
+    // }
 
     return 0;
 }
