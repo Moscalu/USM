@@ -1,6 +1,78 @@
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
+
+// Engine class definition
+class Engine {
+private:
+    string type;
+    int horsepower;
+
+public:
+    // Constructor
+    Engine(string t, int hp) : type(t), horsepower(hp) {}
+
+    // ... Other getter and setter methods for type, horsepower...
+    void setType(string t) { type = t; }
+    string getType() const { return type; }
+
+    void setHorsepower(int h) { horsepower = h; }
+    int getHorsepower() { return horsepower; }
+    // Method to get information about the Engine
+    void getData() const {
+        cout << "Type: " << type << endl;
+        cout << "Horsepower: " << horsepower << endl;
+    }
+
+};
+
+// Forward declaration of Vehicle class
+class Vehicle;
+
+class UserInput {
+public:
+    static vector<Vehicle> createVehicle(int numCars) {
+        vector<Vehicle> vehicles;
+        string id, b, m;
+        int y;
+
+        for (int i = 0; i < numCars; i++) {
+            cout << "Enter please the ID of the car" << (i + 1) << ": "; 
+            cin >> id; //while (id.length() == 10) {}
+            cout << "Enter please the Year of the car" << (i + 1) << ": ";
+            cin >> y;
+            cout << "Enter please the Brand of the car" << (i + 1) << ": ";
+            cin >> b;
+            cout << "Enter please the Model of the car" << (i + 1) << ": ";
+            cin >> m;
+            cout << endl;
+
+            // Create a new Vehicle object
+            Vehicle newVehicle(id, y, b, m);
+
+            // Create a new Engine object
+            string engineType;
+            int engineHorsepower;
+
+            cout << "Enter the Engine Type for car " << (i + 1) << ": ";
+            cin >> engineType;
+            cout << "Enter the Engine Horsepower for car " << (i + 1) << ": ";
+            cin >> engineHorsepower;
+            cout << endl;
+
+            // Use the fully qualified name for the Engine class
+            Vehicle::Engine* newEngine = new Vehicle::Engine(engineType, engineHorsepower);
+
+            // Set the Engine for the Vehicle
+            newVehicle.setEngine(newEngine);
+
+            vehicles.push_back(Vehicle(id, y, b, m));
+        }
+    
+         return vehicles;
+    }
+};
 
 class Vehicle {
 private:
@@ -8,6 +80,9 @@ private:
     int year;
     string brand;
     string model;
+    // Composition relationship: Vehicle has an Engine
+    Engine* engine; // Pointer to Engine object
+    friend class Engine;
 
 public:
     //string id;
@@ -19,12 +94,18 @@ public:
 
     // Note that const is used just to let developers to know that this method will not modify any variables. Also an important note is that the compiler
     // will return an error if the method will change any variables.
-    void getData() {
+    void getData() const {
         // Note that inside the same class I can access private vars so to access it from another will be needed to use getters.
         cout << "Identifier: " << identifier << endl;
         cout << "Year: " << year << endl;
         cout << "Brand: " << brand << endl;
         cout << "Model " << model << endl;
+
+        // Display Engine details if available
+        if (engine != nullptr) {
+            cout << "Engine Details:" << endl;
+            engine->getData();
+        }
     }
 
     void setIdentifier(string id) { identifier = id; }
@@ -38,6 +119,12 @@ public:
 
     void setModel(string m) { model = m; }
     string getModel() const { return model; }
+
+    void setEngine(Engine* e) {
+        // Cleanup existing engine before assigning a new one
+        delete engine;
+        engine = e;
+    }
 
     // // Method to validate identifier
     bool validateIdentifier() const {
@@ -61,44 +148,29 @@ public:
 
         return (controlDigit == (identifier[12] - '0'));
     }
-};
 
-class UserInput {
-public:
-    static Vehicle createVehicle() {
-        string id, b, m;
-        int y, c;
-
-        // cout << "How much cars do you want to add?";
-        // cin >> c;
-        cout << "Enter please the ID of the car: "; 
-        cin >> id;
-        cout << "Enter please the Year of the car: ";
-        cin >> y;
-        cout << "Enter please the Brand of the car: ";
-        cin >> b;
-        cout << "Enter please the Model of the car: ";
-        cin >> m;
-    
-         return Vehicle(id, y, b, m);
+    // Destructor to clean up the dynamically allocated Engine object
+    ~Vehicle() {
+        delete engine;
     }
+
+    // Friend declaration to allow Engine class access to private members
+    friend class Engine;
 };
 
 int main() {
     // Testing with data insertion.
-    int counter;
+    int numCars;
     cout << "How much cars do you want to add?" << endl;
-    cin >> counter;
+    cin >> numCars;
 
-    for (int i = 0; i <= counter; i++) {
-        Vehicle car = UserInput::createVehicle();
+    vector<Vehicle> newVehicles = UserInput::createVehicle(numCars);
+
+    // Display information for each vehicle
+    for (const auto& vehicle : newVehicles) {
+        vehicle.getData();
+        cout << endl;
     }
-
-    // Vehicle newVehicle = UserInput::createVehicle();
-    // newVehicle.getData();
-
-    // Vehicle car1("3012345678908", 2022, "Toyota", "Camry");
-    // car1.getData();
 
     // Example usage
     // Vehicle car1("3012345678908", 2022, "Toyota", "Camry");

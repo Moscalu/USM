@@ -9,8 +9,9 @@ public:
     }
 
     // Constructor using Assignment in Constructor Body
-    Vehicle(std::string id, int y, std::string b, std::string m) {
+    Vehicle(std::string& id, int y, std::string& b, std::string& m) {
         std::cout << "Using Assignment in Constructor Body Constructor" << std::endl;
+        std::cout << identifier << std::endl;
         identifier = id;
         year = y;
         brand = b;
