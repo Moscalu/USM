@@ -11,7 +11,7 @@ private:
 
 public:
     //string id;
-    // // Constructors
+    // Constructors
     Vehicle(string id, int y, string b, string m) : identifier(id), year(y), brand(b), model(m) {}
     // Vehicle(string indentifier, int year, string brand, string model) : identifier(identifier), year(year), brand(brand), model(model) {}
     // Vehicle() : identifier(""), year(0), brand(""), model("") {}
@@ -65,12 +65,12 @@ public:
 
 class UserInput {
 public:
-
     static Vehicle createVehicle() {
         string id, b, m;
         int y, c;
 
-        cout << "How much cars do you want to add?"; 
+        // cout << "How much cars do you want to add?";
+        // cin >> c;
         cout << "Enter please the ID of the car: "; 
         cin >> id;
         cout << "Enter please the Year of the car: ";
@@ -86,12 +86,19 @@ public:
 
 int main() {
     // Testing with data insertion.
+    int counter;
+    cout << "How much cars do you want to add?" << endl;
+    cin >> counter;
 
-    Vehicle newVehicle = UserInput::createVehicle();
-    newVehicle.getData();
+    for (int i = 0; i <= counter; i++) {
+        Vehicle car = UserInput::createVehicle();
+    }
 
-    Vehicle car1("3012345678908", 2022, "Toyota", "Camry");
-    car1.getData();
+    // Vehicle newVehicle = UserInput::createVehicle();
+    // newVehicle.getData();
+
+    // Vehicle car1("3012345678908", 2022, "Toyota", "Camry");
+    // car1.getData();
 
     // Example usage
     // Vehicle car1("3012345678908", 2022, "Toyota", "Camry");
@@ -99,16 +106,10 @@ int main() {
     // car2.getData();
 
     // Validate identifiers
-    if (car1.validateIdentifier()) {
-        cout << "Car 1 identifier is valid." << endl;
-    } else {
-        cout << "Car 1 identifier is invalid." << endl;
-    }
-
-    // if (car2.validateIdentifier()) {
-    //     cout << "Car 2 identifier is valid." << endl;
+    // if (car1.validateIdentifier()) {
+    //     cout << "Car 1 identifier is valid." << endl;
     // } else {
-    //     cout << "Car 2 identifier is invalid." << endl;
+    //     cout << "Car 1 identifier is invalid." << endl;
     // }
 
     return 0;
