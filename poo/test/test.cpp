@@ -27,9 +27,6 @@ public:
 
 };
 
-// Forward declaration of Vehicle class
-class Vehicle;
-
 class UserInput {
 public:
     static vector<Vehicle> createVehicle(int numCars) {
@@ -48,24 +45,24 @@ public:
             cin >> m;
             cout << endl;
 
-            // Create a new Vehicle object
-            Vehicle newVehicle(id, y, b, m);
+            // // Create a new Vehicle object
+            // Vehicle newVehicle(id, y, b, m);
 
-            // Create a new Engine object
-            string engineType;
-            int engineHorsepower;
+            // // Create a new Engine object
+            // string engineType;
+            // int engineHorsepower;
 
-            cout << "Enter the Engine Type for car " << (i + 1) << ": ";
-            cin >> engineType;
-            cout << "Enter the Engine Horsepower for car " << (i + 1) << ": ";
-            cin >> engineHorsepower;
-            cout << endl;
+            // cout << "Enter the Engine Type for car " << (i + 1) << ": ";
+            // cin >> engineType;
+            // cout << "Enter the Engine Horsepower for car " << (i + 1) << ": ";
+            // cin >> engineHorsepower;
+            // cout << endl;
 
-            // Use the fully qualified name for the Engine class
-            Vehicle::Engine* newEngine = new Vehicle::Engine(engineType, engineHorsepower);
+            // // Use the fully qualified name for the Engine class
+            // Vehicle::Engine* newEngine = new Vehicle::Engine(engineType, engineHorsepower);
 
-            // Set the Engine for the Vehicle
-            newVehicle.setEngine(newEngine);
+            // // Set the Engine for the Vehicle
+            // newVehicle.setEngine(newEngine);
 
             vehicles.push_back(Vehicle(id, y, b, m));
         }
@@ -81,7 +78,7 @@ private:
     string brand;
     string model;
     // Composition relationship: Vehicle has an Engine
-    Engine* engine; // Pointer to Engine object
+    // Engine* engine; // Pointer to Engine object
     friend class Engine;
 
 public:
@@ -101,11 +98,11 @@ public:
         cout << "Brand: " << brand << endl;
         cout << "Model " << model << endl;
 
-        // Display Engine details if available
-        if (engine != nullptr) {
-            cout << "Engine Details:" << endl;
-            engine->getData();
-        }
+        // // Display Engine details if available
+        // if (engine != nullptr) {
+        //     cout << "Engine Details:" << endl;
+        //     engine->getData();
+        // }
     }
 
     void setIdentifier(string id) { identifier = id; }
@@ -120,11 +117,11 @@ public:
     void setModel(string m) { model = m; }
     string getModel() const { return model; }
 
-    void setEngine(Engine* e) {
-        // Cleanup existing engine before assigning a new one
-        delete engine;
-        engine = e;
-    }
+    // void setEngine(Engine* e) {
+    //     // Cleanup existing engine before assigning a new one
+    //     delete engine;
+    //     engine = e;
+    // }
 
     // // Method to validate identifier
     bool validateIdentifier() const {
@@ -149,10 +146,10 @@ public:
         return (controlDigit == (identifier[12] - '0'));
     }
 
-    // Destructor to clean up the dynamically allocated Engine object
-    ~Vehicle() {
-        delete engine;
-    }
+    // // Destructor to clean up the dynamically allocated Engine object
+    // ~Vehicle() {
+    //     delete engine;
+    // }
 
     // Friend declaration to allow Engine class access to private members
     friend class Engine;
@@ -166,11 +163,11 @@ int main() {
 
     vector<Vehicle> newVehicles = UserInput::createVehicle(numCars);
 
-    // Display information for each vehicle
-    for (const auto& vehicle : newVehicles) {
-        vehicle.getData();
-        cout << endl;
-    }
+    // // Display information for each vehicle
+    // for (const auto& vehicle : newVehicles) {
+    //     vehicle.getData();
+    //     cout << endl;
+    // }
 
     // Example usage
     // Vehicle car1("3012345678908", 2022, "Toyota", "Camry");
