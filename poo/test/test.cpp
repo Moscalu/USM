@@ -3,73 +3,7 @@
 #include <vector>
 using namespace std;
 
-// Engine class definition
-class Engine {
-private:
-    string type;
-    int horsepower;
-
-public:
-    // Constructor
-    Engine(string t, int hp) : type(t), horsepower(hp) {}
-
-    // ... Other getter and setter methods for type, horsepower...
-    void setType(string t) { type = t; }
-    string getType() const { return type; }
-
-    void setHorsepower(int h) { horsepower = h; }
-    int getHorsepower() { return horsepower; }
-    // Method to get information about the Engine
-    void getData() const {
-        cout << "Type: " << type << endl;
-        cout << "Horsepower: " << horsepower << endl;
-    }
-
-};
-
-class UserInput {
-public:
-    static vector<Vehicle> createVehicle(int numCars) {
-        vector<Vehicle> vehicles;
-        string id, b, m;
-        int y;
-
-        for (int i = 0; i < numCars; i++) {
-            cout << "Enter please the ID of the car" << (i + 1) << ": "; 
-            cin >> id; //while (id.length() == 10) {}
-            cout << "Enter please the Year of the car" << (i + 1) << ": ";
-            cin >> y;
-            cout << "Enter please the Brand of the car" << (i + 1) << ": ";
-            cin >> b;
-            cout << "Enter please the Model of the car" << (i + 1) << ": ";
-            cin >> m;
-            cout << endl;
-
-            // // Create a new Vehicle object
-            // Vehicle newVehicle(id, y, b, m);
-
-            // // Create a new Engine object
-            // string engineType;
-            // int engineHorsepower;
-
-            // cout << "Enter the Engine Type for car " << (i + 1) << ": ";
-            // cin >> engineType;
-            // cout << "Enter the Engine Horsepower for car " << (i + 1) << ": ";
-            // cin >> engineHorsepower;
-            // cout << endl;
-
-            // // Use the fully qualified name for the Engine class
-            // Vehicle::Engine* newEngine = new Vehicle::Engine(engineType, engineHorsepower);
-
-            // // Set the Engine for the Vehicle
-            // newVehicle.setEngine(newEngine);
-
-            vehicles.push_back(Vehicle(id, y, b, m));
-        }
-    
-         return vehicles;
-    }
-};
+class Engine;
 
 class Vehicle {
 private:
@@ -154,6 +88,76 @@ public:
     // Friend declaration to allow Engine class access to private members
     friend class Engine;
 };
+
+// Engine class definition
+class Engine {
+private:
+    string type;
+    int horsepower;
+
+public:
+    // Constructor
+    Engine(string t, int hp) : type(t), horsepower(hp) {}
+
+    // ... Other getter and setter methods for type, horsepower...
+    void setType(string t) { type = t; }
+    string getType() const { return type; }
+
+    void setHorsepower(int h) { horsepower = h; }
+    int getHorsepower() { return horsepower; }
+    // Method to get information about the Engine
+    void getData() const {
+        cout << "Type: " << type << endl;
+        cout << "Horsepower: " << horsepower << endl;
+    }
+
+};
+
+class UserInput {
+public:
+    static vector<Vehicle> createVehicle(int numCars) {
+        vector<Vehicle> vehicles;
+        string id, b, m;
+        int y;
+
+        for (int i = 0; i < numCars; i++) {
+            cout << "Enter please the ID of the car" << (i + 1) << ": "; 
+            cin >> id; //while (id.length() == 10) {}
+            cout << "Enter please the Year of the car" << (i + 1) << ": ";
+            cin >> y;
+            cout << "Enter please the Brand of the car" << (i + 1) << ": ";
+            cin >> b;
+            cout << "Enter please the Model of the car" << (i + 1) << ": ";
+            cin >> m;
+            cout << endl;
+
+            // // Create a new Vehicle object
+            // Vehicle newVehicle(id, y, b, m);
+
+            // // Create a new Engine object
+            // string engineType;
+            // int engineHorsepower;
+
+            // cout << "Enter the Engine Type for car " << (i + 1) << ": ";
+            // cin >> engineType;
+            // cout << "Enter the Engine Horsepower for car " << (i + 1) << ": ";
+            // cin >> engineHorsepower;
+            // cout << endl;
+
+            // // Use the fully qualified name for the Engine class
+            // Vehicle::Engine* newEngine = new Vehicle::Engine(engineType, engineHorsepower);
+
+            // // Set the Engine for the Vehicle
+            // newVehicle.setEngine(newEngine);
+
+            vehicles.push_back(Vehicle(id, y, b, m));
+        }
+    
+         return vehicles;
+    }
+};
+
+
 
 int main() {
     // Testing with data insertion.

@@ -2,10 +2,10 @@
 # a)	Definiți 3 funcții: una pentru a adăuga denumirea unui produs în listă, una pentru a șterge denumirea unui
 #       produs din listă și una pentru afișarea tuturor elementelor din lista curentă.
 # b)	Creați un meniu din 4 opțiuni:
-# 1.	Afișarea listei curente de produse,
-# 2.	Adăugarea produsului în listă, (în baza funcției input()),
-# 3.	Ștergerea denumirii produsului din listă,
-# 4.	Ieșirea din regimul de editare a listei.
+#       1.	Afișarea listei curente de produse,
+#       2.	Adăugarea produsului în listă, (în baza funcției input()),
+#       3.	Ștergerea denumirii produsului din listă,
+#       4.	Ieșirea din regimul de editare a listei.
 
 myList = ["just", "for", "example"]
 
@@ -16,7 +16,8 @@ def add_product():
 
 
 def del_product():
-    myList.remove("anotherthing")
+    rem_product = str(input())
+    myList.remove(rem_product)
 
 
 def list_product():
@@ -24,11 +25,27 @@ def list_product():
         print(x)
 
 
+def task_2():
+    total_sum = 0
+    print("The sum between 1 and 100 using for loop:")
+    for x in range(1, 101):
+        total_sum += x
+    print(total_sum)
+    total_sum = 0
+    y = 1
+    print("The sum between 1 and 100 using while loop:")
+    while y != 101:
+        total_sum += y
+        y += 1
+    print(total_sum)
+
+
 def get_user_input():
     while True:
         try:
-            choice = int(input("Choose an option...[1 - Print List, 2 - Add Item, 3 - Delete Item, 4 - Exit]:"))
-            if 1 <= choice <= 4:
+            choice = int(input("Choose an option...[1 - Print List, 2 - Add Item, 3 - Delete Item,"
+                               " 4 - Exit, 5 - Task2]:"))
+            if 1 <= choice <= 5:
                 return choice
             else:
                 print("Insert a number between 1 and 4 please!")
@@ -45,10 +62,13 @@ def main():
         elif user_choice == 2:
             add_product()
         elif user_choice == 3:
-            print("Choice3")
+            print("Write down the product you want to delete:")
+            del_product()
         elif user_choice == 4:
             print("")
             break
+        elif user_choice == 5:
+            task_2()
 
 
 if __name__ == "__main__":
