@@ -25,7 +25,7 @@ def list_product():
         print(x)
 
 
-def task_2():
+def task_2_a():
     total_sum = 0
     print("The sum between 1 and 100 using for loop:")
     for x in range(1, 101):
@@ -40,15 +40,43 @@ def task_2():
     print(total_sum)
 
 
+def task_2_b():
+    while True:
+        try:
+            print("Please enter an integer number to calculate if it is even or odd.")
+            choice = int((input("")))
+            if choice % 2 == 0:
+                print("Numărul introdus " + str(choice) + " este par")
+                return choice
+            else:
+                print("Numărul nu este par")
+                return choice
+        except ValueError:
+            print("Invalid input!!!")
+
+
+def task_2_c():
+    some_list = ["something", 2, "test", 9]
+    tuple_res = []
+    dict_res = {}
+# Enumerate return value of an list with it's index ex: [(0, 4), (1, 2), (2, 6), (3, 9)]
+    for index, element in enumerate(some_list):
+        tuple_res.append((element, index))
+        dict_res[index] = element
+    print("Tuple created using for loop: {}".format(tuple_res))
+    print("Dictionary created using for loop: {}".format(dict_res))
+    print(dict_res[0])
+
+
 def get_user_input():
     while True:
         try:
             choice = int(input("Choose an option...[1 - Print List, 2 - Add Item, 3 - Delete Item,"
-                               " 4 - Exit, 5 - Task2]:"))
-            if 1 <= choice <= 5:
+                               " 4 - Exit, 5 - Task2_A, 6 - Task2_B, 7 - Task2_C]:"))
+            if 1 <= choice <= 7:
                 return choice
             else:
-                print("Insert a number between 1 and 4 please!")
+                print("Insert a number between 1 and 6 please!")
         except ValueError:
             print("Invalid input!!!")
 
@@ -65,10 +93,14 @@ def main():
             print("Write down the product you want to delete:")
             del_product()
         elif user_choice == 4:
-            print("")
+            print("Goodbye!")
             break
         elif user_choice == 5:
-            task_2()
+            task_2_a()
+        elif user_choice == 6:
+            task_2_b()
+        elif user_choice == 7:
+            task_2_c()
 
 
 if __name__ == "__main__":
@@ -81,10 +113,11 @@ if __name__ == "__main__":
 # b) Creează un program care determină dacă un număr (introdus de la tastatură) este par sau impar.
 #    Se va afișa în terminal un mesaj similar cu: “Numărul introdus X este par”, în cazul în care numărul este par,
 #    iar “Numărul nu este par” în caz contrar.
-# NOTĂ: Un număr este par dacă se poate împărți la 2. Exemplu (2, 4, 8, etc.)
+#    NOTĂ: Un număr este par dacă se poate împărți la 2. Exemplu (2, 4, 8, etc.)
 # c) Creați în mod iterativ două variabile utilizând următoarele tipuri de date: list, tuple, set sau dicționar.
 # d) Scrieți un program care sorteză crescător elementele unui tuplu și calculează suma acestora.
 # f) Creați 2 liste și returnați un set care conține elementele comune între cele două liste.
+#
 # Sarcina 3.
 # Scrieți 3 exemple de cod, în care să utilizați câte 2 funcții și metode (la discreția voastră) pe care le veți aplica
 # asupra elementelor: listelor, mulțimilor, seturi sau asupra dicționarelor.
