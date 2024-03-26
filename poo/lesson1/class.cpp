@@ -56,6 +56,7 @@ class CardCredit: public CardBancar {
 
         void Tranzactie(float suma, TipTranzactie tipTranzactie) {
             if((tipTranzactie == extrage) && (suma<=limita)) {
+                cout << "Limita: " << limita << endl << "Sold: " << sold << "Suma introdusa: " << suma;
                 sold -= suma;
             } else {
                 cout << "Suma depaseste limita" << endl;
@@ -73,6 +74,7 @@ class ContBancar{
         string iban;
         float sold;
         vector<CardBancar*> carduri;
+        vector<CardCredit*> carduriCredit;
     public:
         ContBancar(string t, string i, float s):titular(t), iban(i), sold(s) {}
 
@@ -80,14 +82,15 @@ class ContBancar{
         string GetIban() {return iban;}
         float GetSold() {return sold;} 
 
-        void AddCard(string nrCard,string dataExipirarii){
+        void AddCard(string nrCard, string dataExipirarii){
             CardBancar* pCard = new CardBancar(nrCard, titular, dataExipirarii, sold);
             carduri.push_back(pCard);
         }
 
-        void AddCardCredit(string nrCard,string dataExipirarii, float limita) {
+        void AddCardCredit(string nrCard, string dataExipirarii, float limita) {
             CardCredit* pCard = new CardCredit(nrCard, titular, dataExipirarii, sold, limita);
             carduri.push_back(pCard);
+            carduriCredit.push_back(pCard);
         }
 
         void Informatii() {
@@ -95,16 +98,28 @@ class ContBancar{
             cout << "Iban: " << iban << endl;
             cout << "Carduri: " << endl;
             cout << "========================================" << endl;
-            for(auto &card: carduri){
-                card->MiniExtras();
+            for(auto &card: carduri) {
+                (*card).MiniExtras();
             }
             cout << "========================================" << endl;
         }
 
         void Tranzactie(string nrCard, TipTranzactie tip, float suma) {
-            for(CardBancar* card: carduri) {
-                if(card->GetNrCard() == nrCard) {
-                    card->Tranzactie(suma, tip);
+            /// int x = 2;
+            /// int* pnt = &x; Here pnt will take address of the memory where 2 sit.
+            /// *pnt == x;     Here * is used as dereference, which will output the value itself
+            /// 
+            for ( CardBancar* card: carduri ) {
+                if((*card).GetNrCard() == nrCard) {
+                    (*card).Tranzactie(suma, tip);
+                    if (nrCard == "4534567892345") {
+                        cout << "We perform operation on vector with index: " << card << endl;
+                    }
+                }
+            }
+            for ( CardCredit* card: carduriCredit ) {
+                if ((*card).GetNrCard() == nrCard) {
+                    (*card).Tranzactie(suma, tip);
                 }
             }
         }
@@ -116,6 +131,7 @@ class ContBancar{
                 }
             }
             carduri.clear();
+            cout << "Destructor has been executed" << endl;
         }
 };
 
@@ -124,7 +140,7 @@ int main(){
     c1.AddCard("4111158362643567", "10/24");
     c1.AddCard("5374038456045064", "12/28");
     c1.AddCardCredit("4534567892345", "01/33", 1000);
-    c1.Informatii();
+    ///c1.Informatii();
     cout << endl;
     c1.Tranzactie("4534567892345", depune, 100);
     c1.Tranzactie("4534567892345", extrage, 5000);
