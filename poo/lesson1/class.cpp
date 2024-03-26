@@ -15,6 +15,7 @@ class CardBancar {
         string dataExipirarii;
         float sold;
     public:
+
     CardBancar(string nrCard, string titular,string dataExipirarii, float sold) {
         this->nrCard = nrCard;
         this->titular = titular;
@@ -28,21 +29,21 @@ class CardBancar {
     float GetSold() {return sold;}
 
     void Tranzactie(float suma, TipTranzactie tipTranzactie) {
-        if(tipTranzactie== extrage) {
+        if(tipTranzactie == extrage) {
             sold -= suma;
         }
 
-        if(tipTranzactie==depune) {
+        if(tipTranzactie == depune) {
             sold += suma;
         }
     }
 
-    void MiniExtaras() {
+    void MiniExtras() {
         cout << "********************" << endl;
-        cout << "Numarul cardului: " << nrCard <<endl;
-        cout << "Titular: " << titular <<endl;
-        cout << "Data expirarii: " << dataExipirarii <<endl;
-        cout << "Soldul: " << sold <<endl;
+        cout << "Numarul cardului: " << nrCard << endl;
+        cout << "Titular: " << titular << endl;
+        cout << "Data expirarii: " << dataExipirarii << endl;
+        cout << "Soldul: " << sold << endl;
         cout << "********************" << endl;
     }
 };
@@ -54,16 +55,16 @@ class CardCredit: public CardBancar {
         CardCredit(string nrCard, string titular,string dataExipirarii, float sold, float l):CardBancar(nrCard, titular, dataExipirarii, sold),limita(l) {}
 
         void Tranzactie(float suma, TipTranzactie tipTranzactie) {
-        if((tipTranzactie == extrage) && (suma<=limita)) {
-            sold -= suma;
-        } else {
-            cout << "Suma depaseste limita" << endl;
-        }
+            if((tipTranzactie == extrage) && (suma<=limita)) {
+                sold -= suma;
+            } else {
+                cout << "Suma depaseste limita" << endl;
+            }
 
-        if(tipTranzactie==depune) {
-            sold += suma;
+            if(tipTranzactie==depune) {
+                sold += suma;
+            }
         }
-    }
 };
 
 class ContBancar{
@@ -94,15 +95,15 @@ class ContBancar{
             cout << "Iban: " << iban << endl;
             cout << "Carduri: " << endl;
             cout << "========================================" << endl;
-            for(auto & card: carduri){
-                card->MiniExtaras();
+            for(auto &card: carduri){
+                card->MiniExtras();
             }
             cout << "========================================" << endl;
         }
 
         void Tranzactie(string nrCard, TipTranzactie tip, float suma) {
             for(CardBancar* card: carduri) {
-                if(card->GetNrCard()==nrCard) {
+                if(card->GetNrCard() == nrCard) {
                     card->Tranzactie(suma, tip);
                 }
             }
@@ -113,13 +114,11 @@ class ContBancar{
                 if(card!=NULL) {
                     delete card;
                 }
-                
             }
-
             carduri.clear();
         }
-
 };
+
 int main(){
     ContBancar c1("Lupu Nicu", "MD242354h", 3000);
     c1.AddCard("4111158362643567", "10/24");
