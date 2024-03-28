@@ -20,13 +20,13 @@ undefined, null, boolean, string, symbol, number and object
 				true/false		smth unique	
 */
 
-var myName = "Daniel" // Use within the whole programm
+var myName = "Daniel"; // Use within the whole programm
 
-myName = 8
+myName = 8;
 
-let ourName = "freeCodeCamp" // Will be used only within the scope where we declared that
+let ourName = "freeCodeCamp"; // Will be used only within the scope where we declared that
 
-const pi = 3.14 // After declaration you cannot change it's value, you will get an error
+const pi = 3.14; // After declaration you cannot change it's value, you will get an error
 
 
 
@@ -35,13 +35,13 @@ const pi = 3.14 // After declaration you cannot change it's value, you will get 
 var a;
 var b = 2; // Where 2 is assigned to the "b" variable
 
-console.log(a) // Here output will be "null"
+console.log(a); // Here output will be "null"
 
 a = 7; // By assigning to an variable a value, you initialize it
 
 b = a;
 
-console.log(a) // Here it will output "7"
+console.log(a); // Here it will output "7"
 
 //-----------------------------1.3 Initialization of variables------------------------------
 
@@ -78,7 +78,7 @@ tITLEcASEoVER = 9000;
 // Adding
 
 var sum = 10 + 10;
-console.log(sum)
+console.log(sum);
 
 // Substracting
 
