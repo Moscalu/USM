@@ -8,58 +8,27 @@
   </head>
   <body>
     <main>
-      <h1>Calorie Counter</h1>
       <div class="container">
         <form id="calorie-counter">
-          <label for="budget">Budgets</label>
+          <label for="budget">Fields: </label>
           <input
             type="number"
             min="0"
             id="budget"
-            placeholder="Daily calorie budget"
+            placeholder="Wanted number of fields"
             required
           />
           <div class="controls">
             <span>
-              <label for="entry-dropdown">Add food or exercise:</label>
+              <label for="entry-dropdown">Add field:</label>
               <select id="entry-dropdown" name="options">
-                <option value="breakfast" selected>Breakfast</option>
-                <option value="lunch">Lunch</option>
-                <option value="dinner">Dinner</option>
-                <option value="snacks">Snacks</option>
-                <option value="exercise">Exercise</option>
+                <option value="raw" selected>Raw</option>
               </select>
               <button type="button" id="add-entry">Add Entry</button>
             </span>
           </div>
-          <fieldset id="breakfast">
-            <legend>Breakfast</legend>
-            <div class="input-container"></div>
-          </fieldset>
-          <fieldset id="lunch">
-            <legend>Lunch</legend>
-            <div class="input-container">
-                <!-- <label for="${entryDropdown.value}-${entryNumber}-name">Entry ${entryNumber} Name</label>
-                <input type="text" id="${entryDropdown.value}-${entryNumber}-name" placeholder="Name" />
-                <label for="${entryDropdown.value}-${entryNumber}-calories">Entry ${entryNumber} Calories</label>
-                <input
-                    type="number"
-                    min="0"
-                    id="${entryDropdown.value}-${entryNumber}-calories"
-                    placeholder="Calories"
-                /> -->
-            </div>
-          </fieldset>
-          <fieldset id="dinner">
-            <legend>Dinner</legend>
-            <div class="input-container"></div>
-          </fieldset>
-          <fieldset id="snacks">
-            <legend>Snacks</legend>
-            <div class="input-container"></div>
-          </fieldset>
-          <fieldset id="exercise">
-            <legend>Exercise</legend>
+          <fieldset id="raw">
+            <legend>Raw</legend>
             <div class="input-container"></div>
           </fieldset>
           <div>
