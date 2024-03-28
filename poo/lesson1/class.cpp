@@ -28,7 +28,7 @@ class CardBancar {
     string GetDataExpirarii() {return dataExipirarii;}
     float GetSold() {return sold;}
 
-    void Tranzactie(float suma, TipTranzactie tipTranzactie) {
+    virtual void Tranzactie(float suma, TipTranzactie tipTranzactie) {
         if(tipTranzactie == extrage) {
             sold -= suma;
         }
@@ -54,16 +54,16 @@ class CardCredit: public CardBancar {
     public:
         CardCredit(string nrCard, string titular,string dataExipirarii, float sold, float l):CardBancar(nrCard, titular, dataExipirarii, sold),limita(l) {}
 
-        void Tranzactie(float suma, TipTranzactie tipTranzactie) {
-            if((tipTranzactie == extrage) && (suma<=limita)) {
-                cout << "Limita: " << limita << endl << "Sold: " << sold << "Suma introdusa: " << suma;
-                sold -= suma;
-            } else {
-                cout << "Suma depaseste limita" << endl;
-            }
-
-            if(tipTranzactie==depune) {
+        void Tranzactie(float suma, TipTranzactie tipTranzactie) override {
+            
+            if (tipTranzactie == depune) {
                 sold += suma;
+                cout << "A fost depus pe cardul de credit: " << suma << " MDL" << endl; 
+            } else if ((tipTranzactie == extrage) && (suma<=limita)) {
+                sold -= suma;
+                cout << "A fost extras de pe cardul de credit: " << suma << " MDL" << endl;
+            } else {
+                cout << "Suma extrasa depaseste limita." << endl;
             }
         }
 };
@@ -74,7 +74,7 @@ class ContBancar{
         string iban;
         float sold;
         vector<CardBancar*> carduri;
-        vector<CardCredit*> carduriCredit;
+        // vector<CardCredit*> carduriCredit;
     public:
         ContBancar(string t, string i, float s):titular(t), iban(i), sold(s) {}
 
@@ -90,7 +90,7 @@ class ContBancar{
         void AddCardCredit(string nrCard, string dataExipirarii, float limita) {
             CardCredit* pCard = new CardCredit(nrCard, titular, dataExipirarii, sold, limita);
             carduri.push_back(pCard);
-            carduriCredit.push_back(pCard);
+            // carduriCredit.push_back(pCard);
         }
 
         void Informatii() {
@@ -112,16 +112,13 @@ class ContBancar{
             for ( CardBancar* card: carduri ) {
                 if((*card).GetNrCard() == nrCard) {
                     (*card).Tranzactie(suma, tip);
-                    if (nrCard == "4534567892345") {
-                        cout << "We perform operation on vector with index: " << card << endl;
-                    }
                 }
             }
-            for ( CardCredit* card: carduriCredit ) {
-                if ((*card).GetNrCard() == nrCard) {
-                    (*card).Tranzactie(suma, tip);
-                }
-            }
+            // for ( CardCredit* card: carduriCredit ) {
+            //     if ((*card).GetNrCard() == nrCard) {
+            //         (*card).Tranzactie(suma, tip);
+            //     }
+            // }
         }
 
         ~ContBancar() {
@@ -136,14 +133,14 @@ class ContBancar{
 };
 
 int main(){
-    ContBancar c1("Lupu Nicu", "MD242354h", 3000);
-    c1.AddCard("4111158362643567", "10/24");
-    c1.AddCard("5374038456045064", "12/28");
+    ContBancar c1("Moscalu Daniel", "MD242354h", 3000);
+    c1.AddCard("4111158362643567", "09/25");
+    c1.AddCard("5374038456045064", "10/27");
     c1.AddCardCredit("4534567892345", "01/33", 1000);
     ///c1.Informatii();
     cout << endl;
     c1.Tranzactie("4534567892345", depune, 100);
-    c1.Tranzactie("4534567892345", extrage, 5000);
+    c1.Tranzactie("4534567892345", extrage, 900);
     c1.Tranzactie("4111158362643567", extrage, 300);
     c1.Tranzactie("5374038456045064", depune, 400);
     c1.Informatii();
