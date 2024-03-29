@@ -5,6 +5,7 @@ const clearButton = document.getElementById('clear');
 const output = document.getElementById('output');
 let isError = false;
 
+
 function cleanInputString(str) {
   const regex = /[+-\s]/g;
   return str.replace(regex, '');
@@ -16,18 +17,20 @@ function isInvalidInput(str) {
 }
 
 function addEntry() {
-  //const targetInputContainer = document.querySelector(`#${entryDropdown.value} .input-container`);
-  const targetInputContainer = document.querySelector('#raw .input-container')
-  const entryNumber = targetInputContainer.querySelectorAll('input[type="number"]').length + 1;
-  const HTMLString = `
-  <label for="raw-${entryNumber}-value">Entry ${entryNumber} Value</label>
-  <input
-    type="number"
-    min="0"
-    id="raw-${entryNumber}-value"
-    placeholder="Value"
-  /><br>`;
-  targetInputContainer.insertAdjacentHTML('beforeend', HTMLString);
+  const fieldsValues = getCaloriesFromInputs([fieldsInput]);
+  for (let i = 0; i < fieldsValues; i++) {
+    const targetInputContainer = document.querySelector('#raw .input-container')
+    const entryNumber = targetInputContainer.querySelectorAll('input[type="number"]').length + 1;
+    const HTMLString = `
+    <label for="raw-${entryNumber}-value">Entry ${entryNumber} Value</label>
+    <input
+      type="number"
+      min="0"
+      id="raw-${entryNumber}-value"
+      placeholder="Value"
+    /><br>`;
+    targetInputContainer.insertAdjacentHTML('beforeend', HTMLString);
+  }
 }
 
 function calculateValues(e) {
