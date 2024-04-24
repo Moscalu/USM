@@ -3,6 +3,7 @@
 #include <vector>
 #include <ctime>
 using namespace std;
+using DataCalendaristica = struct tm;
 
 enum class TipTranzactie {Suplinire, Extragere, Transfer};
 
@@ -30,27 +31,30 @@ class CardBancar {
 protected:
     string numarCard;
     string numeProprietar;
-    string dataExpirarii;
+    DataCalendaristica dataExpirarii;
     double soldCont;
     vector<Tranzactie> istoricTranzactiiList;
 public:
     CardBancar(const string& numarCard, const string& numeProprietar, 
-               const string& dataExpirarii, double soldCont) 
+               double soldCont, const DataCalendaristica& dataExpirarii) 
         : numarCard(numarCard), numeProprietar(numeProprietar), 
           dataExpirarii(dataExpirarii), soldCont(soldCont) {}
 
     string getNumarCard() const {return numarCard;}
     string getNumeProprietar() const {return numeProprietar;}
-    string getDataExpirarii() const {return dataExpirarii;}
+    DataCalendaristica getDataExpirarii() const {return dataExpirarii;}
     double getSoldCont() const {return soldCont;}
 
     void setSoldCont(double newSoldCont) {soldCont = newSoldCont;}
+    void setDataExpirarii(DataCalendaristica newDataExpirarii) {dataExpirarii = newDataExpirarii;}
+    void setNumarCard(string newNumarCard) {numarCard = newNumarCard;}
+    void setNumeProprietar(string newNumeProprietar) {numeProprietar = newNumeProprietar;}
 
-    void afiseazaMiniExtras() const {
+    void afiseazaafiseazaMiniExtras() const {
         cout << "Card Details:\n";
         cout << "Numar Card: " << numarCard << endl;
         cout << "Nume Proprietar: " << numeProprietar << endl;
-        cout << "Data Expirarii: " << dataExpirarii << endl;
+        cout << "Data Expirarii: " << (dataExpirarii.tm_mday) << "/" << dataExpirarii.tm_mon << "/" << dataExpirarii.tm_year << endl;
         cout << "Sold Cont: " << soldCont << endl;
     }
 
@@ -97,8 +101,8 @@ private:
 public:
     // Constructor
     CardDebit(const string& numarCard, const string& numeProprietar, 
-              const string& dataExpirarii, double soldCont, double limita)
-        : CardBancar(numarCard, numeProprietar, dataExpirarii, soldCont), 
+              const DataCalendaristica& dataExpirarii, double soldCont, double limita)
+        : CardBancar(numarCard, numeProprietar, soldCont, dataExpirarii), 
           limitaExtragereZilnica(limita) {}
 
     // Method to perform withdrawal with daily limit check
@@ -118,8 +122,8 @@ private:
 public:
     // Constructor
     CardCredit(const string& numarCard, const string& numeProprietar, 
-               const string& dataExpirarii, double soldCont, double limita)
-        : CardBancar(numarCard, numeProprietar, dataExpirarii, soldCont), 
+               const DataCalendaristica& dataExpirarii, double soldCont, double limita)
+        : CardBancar(numarCard, numeProprietar, soldCont, dataExpirarii), 
           limitaCredit(limita) {}
 
     // Method to perform withdrawal with credit limit check and commission for ATM withdrawals
@@ -155,8 +159,8 @@ public:
     }
 
     // Method to display mini statement for a specific card
-    void afiseazaMiniExtras(CardBancar* card) {
-        card->afiseazaMiniExtras();
+    void afiseazaafiseazaMiniExtras(CardBancar* card) {
+        card->afiseazaafiseazaMiniExtras();
     }
 
     // Method to display transaction history for a specific card
@@ -167,28 +171,128 @@ public:
     // Method to display mini statement and transaction history for all cards
     void afiseazaToateCardurile() {
         for (const auto& card : listaCarduri) {
-            card->afiseazaMiniExtras();
+            card->afiseazaafiseazaMiniExtras();
             card->afiseazaIstoricTranzactii();
         }
     }
 };
 
 int main() {
-    // Create cards for testing
-    CardDebit cardDebit("1234567890123456", "John Doe", "2024-12-31", 5000.0, 1000.0);
-    CardCredit cardCredit("9876543210987654", "Jane Smith", "2025-12-31", 2000.0, 5000.0);
+    // // Create cards for testing
+    // CardDebit cardDebit("1234567890123456", "John Doe", "2024-12-31", 5000.0, 1000.0);
+    // CardCredit cardCredit("9876543210987654", "Jane Smith", "2025-12-31", 2000.0, 5000.0);
 
-    // Create owner and add cards
-    Proprietar owner;
-    owner.adaugaCard(&cardDebit);
-    owner.adaugaCard(&cardCredit);
+    DataCalendaristica expDate = {};
+    expDate.tm_mday = 31; // Ziua
+    expDate.tm_mon = 11; // Luna (0-11, deci 11 = Decembrie)
+    expDate.tm_year = 125; // Anul de la 1900 (125 + 1900 = 2025)
 
-    // Test transactions
-    owner.efectueazaTranzactie(&cardDebit, 500.0, TipTranzactie::Extragere);
-    owner.efectueazaTranzactie(&cardCredit, 1000.0, TipTranzactie::Extragere);
+    CardBancar card ("476583456743", "Vica Popa", 5000, expDate);
+    card.afiseazaMiniExtras();
 
-    // Display mini statement and transaction history for all cards
-    owner.afiseazaToateCardurile();
+    // Crearea unui card de debit
+    CardDebit cardDebit("1234567890", "Ion Popescu", 1500.0, expDate, 2000.0);
+    cardDebit.afiseazaMiniExtras();
+
+    // Crearea unui card de credit
+    CardCredit cardCredit("0987654321", "Ana Ionescu", 500.0, expDate, 5000.0);
+    cardCredit.afiseazaMiniExtras();
+
+    // Simulăm efectuarea unei tranzacții pentru fiecare card
+    cout << "\nEfectuăm o tranzacție de debit...\n";
+    cardDebit.Tranzactie(depune,100.0);
+    cardDebit.afiseazaMiniExtras();
+
+    cout << "\nEfectuăm o tranzacție de credit...\n";
+    cardCredit.Tranzactie(extrage,300.0);
+    cardCredit.afiseazaMiniExtras();
+    
+    cout<< "\nEfectuăm un transfer de pe Debit pe Credit...\n";
+    cardDebit.Tranzactie(transfera, 300.0, &cardCredit);
+    cardDebit.afiseazaMiniExtras();
+    cardCredit.afiseazaMiniExtras();
+    // // Create owner and add cards
+    // Proprietar owner;
+    // owner.adaugaCard(&cardDebit);
+    // owner.adaugaCard(&cardCredit);
+
+    // // Test transactions
+    // owner.efectueazaTranzactie(&cardDebit, 500.0, TipTranzactie::Extragere);
+    // owner.efectueazaTranzactie(&cardCredit, 1000.0, TipTranzactie::Extragere);
+
+    // // Display mini statement and transaction history for all cards
+    // owner.afiseazaToateCardurile();
 
     return 0;
 }
+
+
+    // DataCalendaristica expDate = {};
+    // expDate.tm_mday = 31; // Ziua
+    // expDate.tm_mon = 11; // Luna (0-11, deci 11 = Decembrie)
+    // expDate.tm_year = 125; // Anul de la 1900 (125 + 1900 = 2025)
+
+    // CardBancar card ("476583456743", "Vica Popa", 5000, expDate);
+    // card.afiseazaMiniExtras();
+
+
+// Develop a program to manage the bank cards of an individual.
+
+// The program will contain the following classes:
+
+// 1. Base Class CardBancar:
+
+//     Common attributes for all cards: număr card, nume proprietar, data expirării, sold cont 
+
+//     Common methods: 
+//          constructor
+//          getters and setters for attributes
+//          afiseazaafiseazaMiniExtras() to display the current balance and card details
+//          istoricTranzactii() to display the transaction history
+//     There will be 4 withdrawal modes: Bancomat, Bancă, Terminal, Transfer
+
+//     There will be 3 account replenishment modes: Bancomat, Bancă, Transfer
+//          ! Withdrawals and replenishments via ATM will only be possible for amounts divisible by 10.
+
+// 2. Derived Class CardDebit:
+
+//     Additional attribute: limita de extragere zilnică
+//          daily withdrawal limit
+//     Implement specific methods for managing withdrawals, respecting the withdrawal limit.
+
+// 3. Derived Class CardCredit:
+
+//     Additional attribute: limita de credit
+//          credit limit
+//     Implement specific methods for transactions, allowing the account balance to be exceeded up to the credit limit.
+//     If the withdrawal is made through an ATM, a 2% commission will be applied to the withdrawn amount.
+
+// 4. Owner Class:
+
+//     Attributes: lista de carduri
+//          list of cards (debit and credit).
+//     Methods:
+//          add card
+//          perform transaction (replenishment, withdrawal, transfer between own cards)
+//          display mini statement and transaction history for a specific card or all cards
+
+// 5. Transaction Class:
+
+//     Attributes: tip tranzactie (suplinire, extragere, transfer), suma, data
+//          transaction type (replenishment, withdrawal, transfer)
+//          amount
+//          date
+//     Methods:
+//          constructor
+//          getters
+    
+// Note: In C++, for the DataCalendaristica, you can use the "struct tm" type from the <ctime> library.
+
+// Example:
+
+// using DataCalendaristica = struct tm
+
+// DataCalendaristica dataExp = {};
+// dataExp.tm_mday = 31; // Day
+// dataExp.tm_mon = 11; // Month (0-11, so 11 = December)
+// dataExp.tm_year = 124; // Year since 1900 (124 + 1900 = 2024)

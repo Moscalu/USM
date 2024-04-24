@@ -117,7 +117,7 @@ void Exemplu1() {
 }
 
 void Exemplu2() {
-        // Exemplu de utilizare
+    // Exemplu de utilizare
     // Crearea și inițializarea struct tm pentru data de expirare
     DataCalendaristica expDate = {};
     expDate.tm_mday = 31; // Ziua
