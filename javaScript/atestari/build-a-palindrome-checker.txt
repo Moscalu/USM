@@ -1,0 +1,137 @@
+** start of undefined **
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://cdn.freecodecamp.org/universal/favicons/favicon.ico"
+    />
+    <title>Palindrome Checker</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <div class="palindrome-div">
+        <label for="text-input"
+          >Enter in text to check for a palindrome:
+        </label>
+        <input class="palindrome-input" id="text-input" value="" type="text" />
+        <button class="palindrome-btn" id="check-btn">Check</button>
+        <div class="results-div hidden" id="result"></div>
+      </div>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
+
+** end of undefined **
+
+** start of undefined **
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Lato", Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  background-color: var(--fcc-blue);
+  color: var(--light-grey);
+}
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.palindrome-div {
+  width: min(100vw, 450px);
+  min-height: 100px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 20px;
+  margin: 10px 0;
+  background-color: white;
+  box-shadow: 0 6px 6px #002ead;
+}
+
+
+.palindrome-btn {
+  width: 90px;
+  border: none;
+  padding: 10px;
+  border-radius: 15px;
+  background-color: #5a01a7;
+  color: #fff;
+  cursor: pointer;
+}
+
+.palindrome-input {
+  height: 30px;
+  width: 250px;
+  text-align: center;
+  font-size: 1.2rem;
+  margin: 10px;
+  border: none;
+  border-bottom: 2px solid #5a01a7;
+}
+
+.hidden {
+  display: none;
+}
+
+
+** end of undefined **
+
+** start of undefined **
+
+const userInput = document.getElementById('text-input');
+const buttonCheck = document.getElementById('check-btn');
+const resultDisplay = document.getElementById('result');
+
+function checkForInput(input) {
+  if (input === '') {
+    alert('Please input a value');
+    return;
+  }
+
+  resultDisplay.replaceChildren();
+
+  let lowerCaseStr = input.replace(/[^A-Za-z0-9]/gi, '').toLowerCase();;
+
+  let displayText = `<strong>${input}</strong> ${
+    lowerCaseStr === [...lowerCaseStr].reverse().join('') ? 'is' : 'is not'
+  } a palindrome.
+  `;
+
+  const createParagraph = document.createElement('p');
+  createParagraph.className = 'user-input';
+  createParagraph.innerHTML = displayText;
+  resultDisplay.appendChild(createParagraph);
+
+  resultDisplay.classList.remove('hidden');
+}
+
+buttonCheck.addEventListener("click", () => {
+  checkForInput(userInput.value);
+  userInput.value = '';
+});
+
+
+** end of undefined **
+
